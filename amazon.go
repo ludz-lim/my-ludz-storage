@@ -50,7 +50,8 @@ func NewAmazonS3Backend(bucket string, prefix string, region string, endpoint st
 	}
 	awsConfig.WithDisableSSL(strings.HasPrefix(endpoint, "http://"))
 	awsConfig.WithS3ForcePathStyle(endpoint != "")
-	service := s3.New(session.NewSession(awsConfig))
+	sess, _ := session.NewSession(awsConfig)
+	service := s3.New(sess)
 	b := &AmazonS3Backend{
 		Bucket:     bucket,
 		Client:     service,
