@@ -45,12 +45,12 @@ func NewAmazonS3Backend(bucket string, prefix string, region string, endpoint st
 	fmt.Println("ludwig log ---> calling NewAmazonS3Backend()")
 	awsConfig = aws.NewConfig()
 	awsConfig.WithRegion(aws.String(region))
-	if endpoint != "" && endpoint != nil {
+	if endpoint != "" {
 		awsConfig.WithEndpoint(endpoint)
 	}
 	awsConfig.WithDisableSSL(aws.Bool(strings.HasPrefix(endpoint, "http://")))
 	awsConfig.WithS3ForcePathStyle(aws.Bool(endpoint != ""))
-	service := s3.New(session.NewSession(awsConfig))
+	service := s3.New(session.NewSession(&awsConfig))
 	b := &AmazonS3Backend{
 		Bucket:     bucket,
 		Client:     service,
