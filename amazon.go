@@ -43,7 +43,7 @@ type AmazonS3Backend struct {
 // NewAmazonS3Backend creates a new instance of AmazonS3Backend
 func NewAmazonS3Backend(bucket string, prefix string, region string, endpoint string, sse string) *AmazonS3Backend {
 	fmt.Println("ludwig log ---> calling NewAmazonS3Backend()")
-	awsConfig = aws.NewConfig()
+	awsConfig := aws.NewConfig()
 	awsConfig.WithRegion(aws.String(region))
 	if endpoint != "" {
 		awsConfig.WithEndpoint(endpoint)
