@@ -44,13 +44,13 @@ type AmazonS3Backend struct {
 func NewAmazonS3Backend(bucket string, prefix string, region string, endpoint string, sse string) *AmazonS3Backend {
 	fmt.Println("ludwig log ---> calling NewAmazonS3Backend()")
 	awsConfig := aws.NewConfig()
-	awsConfig.WithRegion(aws.String(region))
+	awsConfig.WithRegion(region)
 	if endpoint != "" {
 		awsConfig.WithEndpoint(endpoint)
 	}
-	awsConfig.WithDisableSSL(aws.Bool(strings.HasPrefix(endpoint, "http://")))
-	awsConfig.WithS3ForcePathStyle(aws.Bool(endpoint != ""))
-	service := s3.New(session.NewSession(&awsConfig))
+	awsConfig.WithDisableSSL(strings.HasPrefix(endpoint, "http://"))
+	awsConfig.WithS3ForcePathStyle(endpoint != "")
+	service := s3.New(session.NewSession(awsConfig))
 	b := &AmazonS3Backend{
 		Bucket:     bucket,
 		Client:     service,
